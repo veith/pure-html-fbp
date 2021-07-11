@@ -124,21 +124,21 @@
             ƒ-set-title="--soundSource(*.label)"></audio-card>
 
 <hr>
+<div ƒ-remove="--ejectClk">
 
-<furo-button primary outline label="music" data-src="/assets/InTheTown -NoName.m4a"
-             @-click="--soundSource(*.srcElement)"
-></furo-button>
+  <furo-button primary outline label="music" data-src="/assets/InTheTown -NoName.m4a"
+               @-click="--soundSource(*.srcElement)"
+  ></furo-button>
 
-<furo-button primary outline label="speak" data-src="/assets/Zh-dialect_Guangzhou_sample.ogg"
-             @-click="--soundSource(*.srcElement)"
-></furo-button>
+  <furo-button primary outline label="speak" data-src="/assets/Zh-dialect_Guangzhou_sample.ogg"
+               @-click="--soundSource(*.srcElement)"
+  ></furo-button>
 
+  <furo-button danger outline label="change image" data-src="/assets/pixelveith1x1.png"
+               @-click="--mediaSource(*.srcElement.dataset.src)"
+  ></furo-button>
 
-
-<furo-button danger outline label="change image" data-src="/assets/pixelveith1x1.png"
-             @-click="--mediaSource(*.srcElement.dataset.src)"
-></furo-button>
-
+</div>
 
 <!-- define the components  -->
 
@@ -163,7 +163,8 @@
         <furo-button primary="" label="▶" @-click="--playClicked"></furo-button>
         <furo-button label="‖" @-click="--pauseClicked"></furo-button>
         <!-- click will send you a 1 or more, so we set 0 as data-time and send it with the event -->
-        <furo-button title="be kind" label="◁◁" data-time="0" @-click="--rewindClicked(*.srcElement.dataset.time)"></furo-button>
+        <furo-button title="be kind" label="◁◁" data-time="0"
+                     @-click="--rewindClicked(*.srcElement.dataset.time)"></furo-button>
         <furo-button danger="" label="⏏" @-click="^^eject"></furo-button>
       </furo-horizontal-flex>
     </furo-card>
