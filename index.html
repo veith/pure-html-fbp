@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <meta name="Description" content="Furo Webclient Getting Started">
+  <meta name="theme-color" content="#ffffff">
+
+
+  <base id="base" href="/">
+  <title></title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@furo/fbp@5.8.2/assets/furo-fbp.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@furo/fbp@5.8.2/assets/DOMFBP.min.js"></script>
+  <script type="module" src="src/web-components-imports.js"></script>
+
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      --primary-light: #c158dc;
+      --primary: #8e24aa;
+
+      /* --xxx-rgb is used for the states  */
+      --primary-rgb: 142, 36, 170;
+      --primary-dark: #5c007a;
+      --primary-variant: #2587a3;
+      --on-primary: #ffffff;
+
+      --secondary-light: #fdd756;
+      --secondary: #fecf2f;
+      --secondary-rgb: 254, 207, 47;
+      --secondary-dark: #ffc911;
+      --secondary-variant: #faedc1;
+      --on-secondary: #212121;
+
+      --accent-light: #ecf3ca;
+      --accent: #cce35b;
+      --accent-dark: #bada18;
+      --on-accent: #212121;
+
+      --background: #f7f7f7;
+      --on-background: #212121;
+
+      --surface: #ffffff;
+      --surface-light: #f3f3f3;
+      --surface-dark: #f0f0f0;
+      --on-surface: #212121;
+      --on-surface-rgb: 33, 33, 33;
+      --separator: #e4e4e4;
+
+      /* States */
+      --state-hover: 0.04;
+      --state-selected: 0.08;
+      --state-selected-hover: 0.12;
+      --state-active: 0.1;
+      --state-focus: 0.12;
+      --state-focused-hover: 0.18;
+      --state-selected-focus: 0.2;
+      --state-selected-focused-hover: 0.24;
+      --state-disabled: 0.38;
+
+      /* Emphasis, used for secondary text,... */
+      --medium-emphasis-surface: 0.65;
+      --medium-emphasis-primary: 0.74;
+
+      /* Input, Forms, Toast*/
+      --error: #ea1c24;
+      --on-error: #ffffff;
+
+      --danger-light: #eb1a1f;
+      --danger: #d8191e;
+      --danger-dark: #c6191e;
+      --on-danger: #f8f8f8;
+
+      --success: #129991;
+      --on-success: #202124;
+
+      --disabled: #c3c4c3;
+      --on-disabled: #585858;
+
+      /* Spacing */
+      --spacing-xxs: 4px;
+      --spacing-xs: 8px;
+      --spacing-s: 16px;
+      --spacing: 24px;
+      --spacing-m: 24px;
+      --spacing-l: 32px;
+      --spacing-xl: 48px;
+      --spacing-xxl: 96px;
+
+      --split-master-width: 320px;
+      --navigation-drawer-width: 256px;
+
+      --furo-app-drawer-backdrop: rgba(55, 55, 55, 0.5);
+      --furo-data-table-select-color: var(--surface-light);
+      --furo-data-table-background: white;
+
+      --furo-form-layouter-row-gap: var(--spacing-s, 16px);
+      --furo-form-layouter-column-gap: var(--spacing-s, 16px);
+
+      --input-hint-color: var(--primary);
+      --blockquote: var(--accent);
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      padding: 80px;
+      box-sizing: border-box;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<!-- use the component as many times you want, even before the definition-->
+<audio-card @-eject="--ejectClk" ƒ-remove="--ejectClk" ƒ-set-source="--soundSource(*.dataset.src)"
+            ƒ-set-image="--mediaSource"
+            ƒ-set-title="--soundSource(*.label)"></audio-card>
+
+<hr>
+
+<furo-button primary outline label="music" data-src="/assets/InTheTown -NoName.m4a"
+             @-click="--soundSource(*.srcElement)"
+></furo-button>
+
+<furo-button primary outline label="speak" data-src="/assets/Zh-dialect_Guangzhou_sample.ogg"
+             @-click="--soundSource(*.srcElement)"
+></furo-button>
+
+
+
+<furo-button danger outline label="change image" data-src="/assets/pixelveith1x1.png"
+             @-click="--mediaSource(*.srcElement.dataset.src)"
+></furo-button>
+
+
+<!-- define the components  -->
+
+<furo-fbp name="audio-card" expose="setSource,setTitle,setImage">
+  <template>
+    <style>
+      :host {
+        display: block;
+        width: 330px;
+      }
+    </style>
+    <!-- use the component as many times you want, even before the definition-->
+    <furo-card header-text="Language Sample Demo" ƒ-.header-text="|--setTitle"
+               secondary-text="German ABCDEF..." ƒ-.secondary-text="|--setSource">
+      <language-sample
+        ƒ-play="--playClicked"
+        ƒ-pause="--pauseClicked"
+        ƒ-rewind="--rewindClicked"
+        ƒ-set-source="|--setSource"></language-sample>
+      <img slot="media" src="https://components.furo.pro/assets/images/hamburg.jpg" ƒ-.src="|--setImage" alt="">
+      <furo-horizontal-flex space slot="action">
+        <furo-button primary="" label="▶" @-click="--playClicked"></furo-button>
+        <furo-button label="‖" @-click="--pauseClicked"></furo-button>
+        <!-- click will send you a 1 or more, so we set 0 as data-time and send it with the event -->
+        <furo-button title="be kind" label="◁◁" data-time="0" @-click="--rewindClicked(*.srcElement.dataset.time)"></furo-button>
+        <furo-button danger="" label="⏏" @-click="^^eject"></furo-button>
+      </furo-horizontal-flex>
+    </furo-card>
+  </template>
+</furo-fbp>
+
+
+<furo-fbp name="language-sample" expose="play,pause,rewind,setSource">
+  <template>
+    <audio ƒ-play="|--play"
+           ƒ-pause="|--pause"
+           ƒ-.current-time="|--rewind"
+           ƒ-.src="|--setSource"
+           src="https://upload.wikimedia.org/wikipedia/commons/9/92/German_alphabet-2.ogg"></audio>
+  </template>
+</furo-fbp>
+
+
+<noscript>
+  Please enable JavaScript to view this website.
+</noscript>
+
+
+</body>
+
+<script>
+  // activate FBP on body
+  const fbphandle = new DOMFBP(document.body)
+  // enable tracing
+  fbphandle._FBPTraceWires();
+</script>
+</html>
